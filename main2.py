@@ -26,7 +26,7 @@ bodies = [
     Static_body(2e12, 0, 2e30, 16, (255,0,0)),
 ]
 
-render(screen, bodies)
+renderTest(screen, bodies)
 
 while running:
     clock.tick(constants.fps)
