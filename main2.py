@@ -9,12 +9,14 @@ import math
 from bodies import *
 from vectorField import render
 import constants
+from button import Button
 
 pygame.init()
 clock = pygame.time.Clock()
 
 running = True
 gameStopped = False
+astromouse = False
 
 screen_res = (constants.width, constants.height)
 pygame.display.set_caption("Rocket Man!")
@@ -39,7 +41,7 @@ while running:
             running = False
 
         #Place an asteroid where the mouse is
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN and astromouse == True:
             can_place = True
             
             #Cannot place an asteroid on top of another body
@@ -52,11 +54,22 @@ while running:
 
             if can_place:
                 planets.astrioid_bodies.append(asteroid)
+                astromouse = False
 
     
     # Render the screen
     screen.fill(constants.black)
-    asteroid.draw(screen, constants.width, constants.height)
+
+    new_but = Button("New", 400, 400, 100, 100, (50, 50, 50), (150, 150, 150))
+    new_but.draw(screen)
+    
+    if event.type == pygame.MOUSEBUTTONDOWN and new_but.x < mouse[0] < new_but.x + new_but.width and new_but.y < mouse[1] < new_but.y + new_but.height:
+        astromouse = True
+
+    if astromouse:
+        asteroid.draw(screen, constants.width, constants.height)
+    print(astromouse)
+
 
     #Draw all bodies and update position of moving body
     for body in planets.game_bodies:
