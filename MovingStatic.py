@@ -8,6 +8,7 @@ import constants
 pygame.init()
 running = True
 gamestopped = False
+playerdead = False
 clock = pygame.time.Clock()
 
 screen = pygame.display.set_mode((constants.width, constants.height))
@@ -59,6 +60,35 @@ class Static_body:
             rect = self.image.get_rect(center=(screen_x, screen_y))
             screen.blit(self.image, rect)
 
+class Explosion(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        pygame.sprite.Sprite.__init__(self)
+        self.images = []
+        for num in range(1,4):
+            img = pygame.image.load(f"sprites/explosion{num}.png")
+            img = pygame.transform.scale(img, (100,100))
+            self.images.append(img)
+        self.index = 0
+        self.image = self.images[self.index]
+        self.rect = self.image.get_rect()
+        self.rect.center = [x, y]
+        self.counter = 0
+
+    def update(self):
+        explosion_speed = 4
+        self.counter += 1
+
+        if self.counter >= explosion_speed and self.index < len(self.images) - 1:
+            self.counter = 0
+            self.index += 1
+            self.image = self.images[self.index]
+
+		#if the animation is complete, reset animation index
+        if self.index >= len(self.images) - 1 and self.counter >= explosion_speed:
+            self.kill() 
+
+explosion_group = pygame.sprite.Group()
+
 
 class Moving_body:
     def __init__(self, x, y, vx, vy, mass, radius, color, image=None):
@@ -68,6 +98,7 @@ class Moving_body:
         self.radius = radius
         self.color = color
         self.image = image
+        self.dead = False
     
     def update_position(self, bodies):
         #Euler Numerical Integration.. Not stable long term but should be fine for our game? 
@@ -92,8 +123,19 @@ class Moving_body:
                     fx += f * dx / r
                     fy += f * dy / r
                 else:
-                    self.vx = 0
-                    self.vy = 0
+                    if not self.dead:
+                        screen_x = int(self.x * scale  + constants.width // 2)
+                        screen_y = int(self.y * scale  + constants.height // 2)
+
+                        explosion = Explosion(screen_x,screen_y)
+                        explosion_group.add(explosion)
+
+                        self.dead = True
+                        self.vx = 0
+                        self.vy = 0
+                        self.x = 10000000 // scale
+                        self.y = 10000000 // scale
+                    return
 
         #now that we have the force we can compute the acceleration velocity and position
         ax = fx / self.mass
@@ -105,6 +147,7 @@ class Moving_body:
         
     
     def reset(self):
+        self.dead = False
         self.x = 2.867e12
         self.y = 0
         self.vx = 0
@@ -140,7 +183,7 @@ class Moving_body:
             pygame.draw.circle(screen, self.color, (screen_x, screen_y), self.radius)
 
 bodies = [
-    Static_body(0, 0, 5e30, 20, (255, 255, 0), planet1_img),
+    Static_body(0, 0, 5e31, 20, (255, 255, 0), planet1_img),
     Static_body(4e12, 2e12, 2e30, 20, (255,0,0), planet2_img),
     Static_body(6e12, 0, 1e30, 20, (0,0,0), planet3_img),
     Static_body(8e12, 0, 8e21, 20, (0,0,0), planet4_img),
@@ -149,7 +192,8 @@ bodies = [
     Moving_body(2.867e12, 0, 0, 6810, 8.681e25, 4, (100, 200, 255), rocket_img)
 ]
 
-while running: 
+while running:
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -174,7 +218,12 @@ while running:
         #Not sure what "isinstance" is
         if isinstance(body, Moving_body) and gamestopped == False:
             body.update_position(bodies)
+        
         body.draw(screen)
+
+    explosion_group.update()
+    explosion_group.draw(screen)
+
 
     pygame.display.flip()
     clock.tick(60)
