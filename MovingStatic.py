@@ -19,7 +19,10 @@ rocket_img = pygame.image.load("sprites/rocket.png").convert_alpha()
 rocket_img = pygame.transform.scale(rocket_img, (20, 20))
 
 planet1_img = pygame.image.load("sprites/planet1.png").convert_alpha()
-planet1_img = pygame.transform.scale(planet1_img, (40, 40))
+planet1_img = pygame.transform.scale(planet1_img, (160, 160))
+
+planet2_img = pygame.image.load("sprites/planet2.png").convert_alpha()
+planet2_img = pygame.transform.scale(planet2_img, (160, 160))
 
 
 G = 6.67430e-11
@@ -126,7 +129,7 @@ class Moving_body:
 
 bodies = [
     Static_body(0, 0, 1.989e30, 8, (255, 255, 0), planet1_img),
-    Static_body(2e12, 0, 2e30, 8, (255,0,0), planet1_img),
+    Static_body(2e12, 0, 2e30, 8, (255,0,0), planet2_img),
     Moving_body(2.867e12, 0, 0, 6810, 8.681e25, 4, (100, 200, 255), rocket_img)
 ]
 
