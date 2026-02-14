@@ -33,30 +33,11 @@ def draw_arrow(
     pygame.draw.polygon(surface, color, rotated_points)
 
 
-def renderTest(screen, body):
-	total_forces = pygame.Vector2(0, 0)
-
-	dx = (body.screen_x - 700)/constants.scale
-	dy = (body.screen_y - 700)/constants.scale
-	dist_sq = dx**2 + dy**2
-	dist = math.sqrt(dist_sq)
-
-	print(f"distance: {dist}")
-
-	force_mag = (constants.G * body.mass * constants.rocketMass) / dist_sq
-	total_forces = (force_mag * (dx / dist), force_mag * (dy / dist))
-
-	center = pygame.Vector2(700, 700)
-
-	angle = math.atan2(total_forces[1], total_forces[0])
-	angle = (angle * (180 / math.pi)) + 90
-	print(f"Total force: {force_mag} Angle: {angle}")
-
-	draw_arrow(screen, center, angle, constants.blue, 5)
-
-
 def render(screen, bodies):
 	'''Renders a vector field based on passed bodies'''
+	# Need to find max and min force values to normalize to the arrows
+
+
 	for x in range((constants.width // 20)+1):
 		for y in range((constants.height // 20)+1):	# For each vector
 			forces = pygame.Vector2(0, 0)
@@ -80,6 +61,8 @@ def render(screen, bodies):
 			angle = (angle * (180 / math.pi)) + 90
 
 			center = pygame.Vector2((x*20), (y*20))
+
+			color = pygame.Color()
 
 			draw_arrow(screen, center, angle, constants.arrow, 5)
 
