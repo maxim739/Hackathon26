@@ -14,10 +14,10 @@ screen_res = (constants.width, constants.height)
 
 screen = pygame.display.set_mode(screen_res)
 
-for x in range(1, 10):
-	for y in range(1, 10):
-		center = pygame.Vector2((x*50), (y*50))
-		draw_arrow(screen, center, 0, constants.red, 10)
+for x in range((constants.width // 20)+1):
+	for y in range((constants.height // 20)+1):
+		center = pygame.Vector2((x*20), (y*20))
+		draw_arrow(screen, center, (x-y)*10, constants.blue, 5)
 
 
 while running:
