@@ -1,5 +1,6 @@
 import pygame
 import math
+import constants
 
 
 
@@ -9,9 +10,7 @@ running = True
 gamestopped = False
 clock = pygame.time.Clock()
 
-width = 1000
-height = 600
-screen = pygame.display.set_mode((width, height))
+screen = pygame.display.set_mode((constants.width, constants.height))
 pygame.display.set_caption("Gravity Ball")
 
 #convert alpha keeps png transparent
@@ -36,8 +35,8 @@ class Static_body:
     
     def draw(self, screen):
         
-        screen_x = int(self.x * scale  + width // 2)
-        screen_y = int(self.y * scale  + height // 2)
+        screen_x = int(self.x * scale  + constants.width // 2)
+        screen_y = int(self.y * scale  + constants.height // 2)
         pygame.draw.circle(screen, self.color, (screen_x, screen_y), self.radius)
 
 
@@ -66,12 +65,16 @@ class Moving_body:
                 r = math.sqrt(dx**2 + dy**2)
 
                 #this is to get rid of dividing by zero 
-                if r > 0:
+                if r > (other.radius + self.radius)/scale:
                     #newtons formula f = G Mm / r^2
                     f = G * self.mass * other.mass / (r**2)
                     #break force up into x and y components
                     fx += f * dx / r
                     fy += f * dy / r
+                    print(r)
+                else:
+                    self.vx = 0
+                    self.vy = 0
 
         #now that we have the force we can compute the acceleration velocity and position
         ax = fx / self.mass
