@@ -6,7 +6,7 @@ main is the entry point for the game that serves as the
 
 import pygame
 import sys
-
+import math
 from bodies import *
 from vectorField import render
 import constants
@@ -21,25 +21,48 @@ screen_res = (constants.width, constants.height)
 pygame.display.set_caption("Rocket Man!")
 screen = pygame.display.set_mode(screen_res)
 
+#list of bodies in the game, can be static or moving. Static bodies are like planets and placeable asteroids and moving body is the player
 bodies = [
-    Static_body(0, 0, 1.989e30, 16, (255, 255, 0)),
-    Static_body(2e12, 0, 2e30, 16, (255,0,0)),
-    Moving_body(1e12, 0, 0, 30000, 5.972e24, 8, (0, 0, 255)),
+    #Static_body(0, 0, 1.989e30, 16, (255, 255, 0)),
+    Static_body(2e12, 0, 1e31, 16, (255,0,0)),
+    Moving_body(0.6e12, 0, 10000, 20000, 5.972e24, 8, (0, 0, 255)),
 ]
+
+
 
 while running:
     clock.tick(constants.fps)
     mouse = pygame.mouse.get_pos()
 
+    asteroid = Static_body((mouse[0]/constants.scale)-constants.width/constants.scale/2, 
+                            mouse[1]/constants.scale-constants.height/constants.scale/2, 
+                            5.972e30, 12, (200, 150, 255))
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
+        #Place an asteroid where the mouse is
         if event.type == pygame.MOUSEBUTTONDOWN:
-            bodies.append(Static_body((mouse[0]/constants.scale)-constants.width/constants.scale/2, mouse[1]/constants.scale-constants.height/constants.scale/2, 5.972e24, 12, (200, 150, 255)))
+            can_place = True
+            
+            #Cannot place an asteroid on top of another body
+            for body in bodies:
+                body_screen_x = int(body.x * constants.scale + constants.width // 2)
+                body_screen_y = int(body.y * constants.scale + constants.height // 2)
+                if math.hypot(mouse[0] - body_screen_x, mouse[1] - body_screen_y) <= body.radius:
+                    can_place = False
+                    break
+
+            if can_place:
+                bodies.append(asteroid)
 
     
     # Render the screen
+    screen.fill(constants.black)
+    asteroid.draw(screen, constants.width, constants.height)
+
+    #Draw all bodies and update position of moving body
     for body in bodies:
         if isinstance(body, Moving_body) and gameStopped == False:
             body.update_position(bodies)
