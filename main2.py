@@ -8,7 +8,7 @@ import pygame
 import sys
 import math
 from bodies import *
-from vectorField import *
+from vectorField import render
 import constants
 
 pygame.init()
@@ -24,19 +24,15 @@ screen = pygame.display.set_mode(screen_res)
 #list of bodies in the game, can be static or moving. Static bodies are like planets and placeable asteroids and moving body is the player
 bodies = [
     #Static_body(0, 0, 1.989e30, 16, (255, 255, 0)),
-    Static_body(2e12, 0, 1e31, 16, (255,0,0)),
-    Moving_body(0.6e12, 0, 10000, 20000, 5.972e24, 8, (0, 0, 255)),
+    Static_body(650, 400, 1e31, 16, (255,0,0)),
+    Moving_body(750, 400, 0, 20000, 5.972e24, 8, (0, 0, 255)),
 ]
-
-
 
 while running:
     clock.tick(constants.fps)
     mouse = pygame.mouse.get_pos()
 
-    asteroid = Static_body((mouse[0]/constants.scale)-constants.width/constants.scale/2, 
-                            mouse[1]/constants.scale-constants.height/constants.scale/2, 
-                            5.972e30, 12, (200, 150, 255))
+    asteroid = Static_body(mouse[0], mouse[1], 5.972e30, 12, (200, 150, 255))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:

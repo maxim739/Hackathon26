@@ -42,6 +42,7 @@ class Moving_body:
                 dx = other.x - self.x
                 dy = other.y - self.y
                 r = math.sqrt(dx**2 + dy**2)
+                print(r)
 
                 #this is to get rid of dividing by zero 
                 if r > (other.radius + self.radius)/constants.scale:
@@ -75,7 +76,4 @@ class Moving_body:
         self.vy = 0
 
     def draw(self, screen, width, height):
-
-        screen_x = int(self.x * constants.scale + width // 2)
-        screen_y = int(self.y * constants.scale + height // 2)
-        pygame.draw.circle(screen, self.color, (screen_x, screen_y), self.radius)
+        pygame.draw.circle(screen, self.color, (self.x*constants.scale, self.y*constants.scale), self.radius)
