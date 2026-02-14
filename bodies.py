@@ -50,7 +50,7 @@ class Moving_body:
                     #break force up into x and y components
                     fx += f * dx / r
                     fy += f * dy / r
-                    print(r)
+        
                 else:
                     self.vx = 0
                     self.vy = 0
