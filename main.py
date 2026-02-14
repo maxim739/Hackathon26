@@ -21,8 +21,8 @@ pygame.display.set_caption("Rocket Man!")
 screen = pygame.display.set_mode(screen_res)
 
 bodies = [
-    Static_body(0, 0, 1.989e30, 8, (255, 255, 0)),
-    Static_body(2e12, 0, 2e30, 8, (255,0,0)),
+    Static_body(0, 0, 1.989e30, 16, (255, 255, 0)),
+    Static_body(2e12, 0, 2e30, 16, (255,0,0)),
 ]
 
 while running:
