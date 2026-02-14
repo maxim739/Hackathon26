@@ -4,7 +4,7 @@ import constants
 
 
 class Static_body:
-    def __init__(self, x, y, mass, radius, color):
+    def __init__(self, x, y, mass, radius, color, image=None):
         self.screen_x = x
         self.screen_y = y
         self.x = x / constants.scale
@@ -12,9 +12,14 @@ class Static_body:
         self.mass = mass
         self.radius = radius
         self.color = color
+        self.image = image
     
     def draw(self, screen, width, height):
-        pygame.draw.circle(screen, self.color, (self.screen_x, self.screen_y), self.radius)
+        #pygame.draw.circle(screen, self.color, (self.screen_x, self.screen_y), self.radius)
+
+        if self.image:
+            rect = self.image.get_rect(center=(self.screen_x, self.screen_y))
+            screen.blit(self.image, rect)
 
 class Explosion(pygame.sprite.Sprite):
     def __init__(self, x, y):
@@ -59,7 +64,6 @@ class Moving_body:
         self.image = image
         self.dead = False
 
-    
     def update_position(self, bodies):
         #Euler Numerical Integration.. Not stable long term but should be fine for our game? 
         #Might have to change it in the fututer
@@ -117,8 +121,8 @@ class Moving_body:
 
     def draw(self, screen, width, height):
 
-        screen_x = int(self.x * constants.scale + constants.width // 2)
-        screen_y = int(self.y * constants.scale + constants.height // 2)
+        screen_x = self.x * constants.scale 
+        screen_y = self.y * constants.scale
 
         if self.image:
             #only roate when body is moving
@@ -138,4 +142,4 @@ class Moving_body:
                 rect = self.image.get_rect(center=(screen_x, screen_y))
                 screen.blit(self.image, rect)
         else:
-            pygame.draw.circle(screen, self.color, (self.x*constants.scale, self.y*constants.scale), self.radius)
+            pygame.draw.circle(screen, self.color, (self.x, self.y), self.radius)
