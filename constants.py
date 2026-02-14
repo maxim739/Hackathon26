@@ -10,12 +10,14 @@ import pygame
 # Game constants
 fps = 60
 
+# Physics constants
+G = 6.67430e-11
+
 # Screen values
 width = 1300
 height = 800
 
 # Colors
-
 red = pygame.Color(255, 0, 0)
 black = (0, 0, 0)
 blue = pygame.Color("dodgerblue")

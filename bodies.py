@@ -1,7 +1,7 @@
 import pygame
 import math
+import constants
 
-G = 6.67430e-11
 #This scale stuff is stolen from a man on the internet
 scale = 6e-11
 dt = 864000 #TEN days in seconds
@@ -47,7 +47,7 @@ class Moving_body:
                 #this is to get rid of dividing by zero 
                 if r > (other.radius + self.radius)/scale:
                     #newtons formula f = G Mm / r^2
-                    f = G * self.mass * other.mass / (r**2)
+                    f = constants.G * self.mass * other.mass / (r**2)
                     #break force up into x and y components
                     fx += f * dx / r
                     fy += f * dy / r
