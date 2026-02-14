@@ -34,6 +34,15 @@ planet4_img = pygame.transform.scale(planet4_img, (100, 100))
 planet5_img = pygame.image.load("sprites/planet5.png").convert_alpha()
 planet5_img = pygame.transform.scale(planet5_img, (100, 100))
 
+planet6_img = pygame.image.load("sprites/planet6.png").convert_alpha()
+planet6_img = pygame.transform.scale(planet6_img, (100, 100))
+
+planet7_img = pygame.image.load("sprites/planet7.png").convert_alpha()
+planet7_img = pygame.transform.scale(planet7_img, (100, 100))
+
+planet8_img = pygame.image.load("sprites/planet8.png").convert_alpha()
+planet8_img = pygame.transform.scale(planet8_img, (100, 100))
+
 goal_img = pygame.image.load("sprites/goalAura.png").convert_alpha()
 goal_img = pygame.transform.scale(goal_img, (100, 100))
 
@@ -183,12 +192,15 @@ class Moving_body:
             pygame.draw.circle(screen, self.color, (screen_x, screen_y), self.radius)
 
 bodies = [
-    Static_body(0, 0, 5e31, 20, (255, 255, 0), planet1_img),
+    Static_body(0, 0, 5e28, 20, (255, 255, 0), planet1_img),
     Static_body(4e12, 2e12, 2e30, 20, (255,0,0), planet2_img),
     Static_body(6e12, 0, 1e30, 20, (0,0,0), planet3_img),
     Static_body(8e12, 0, 8e21, 20, (0,0,0), planet4_img),
     Static_body(-5e12, 0, 2e31, 20, (0,0,0), planet5_img),
     Static_body(8e12, -5e12, 8e28, 20, (0,0,0), goal_img),
+    Static_body(-2e12, -5e12, 1e30, 20, (0,0,0), planet6_img),
+    Static_body(6e12, -4e12, 1e30, 20, (0,0,0), planet7_img),
+    Static_body(0, 4e12, 1e30, 20, (0,0,0), planet8_img),
     Moving_body(2.867e12, 0, 0, 6810, 8.681e25, 4, (100, 200, 255), rocket_img)
 ]
 
