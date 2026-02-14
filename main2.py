@@ -27,8 +27,6 @@ bodies = [
     Moving_body(1e12, 0, 0, 30000, 5.972e24, 8, (0, 0, 255)),
 ]
 
-renderTest(screen, bodies)
-
 while running:
     clock.tick(constants.fps)
     mouse = pygame.mouse.get_pos()
