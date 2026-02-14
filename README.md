@@ -3,4 +3,4 @@
 
 Repository for McGill W2026 Physics Hackathon
 
-Maxim DeJong, William Gray, 
+Maxim DeJong, William Gray, Saabir Yousuf
