@@ -36,45 +36,59 @@ def draw_arrow(
 def render(screen, bodies):
 	'''Renders a vector field based on passed bodies'''
 	# Need to find max and min force values to normalize to the arrows
-	for x in range((constants.width // 20)+1):
-		for y in range((constants.height // 20)+1):	# For each vector
-			forces = pygame.Vector2(0, 0)
+	cols = (constants.width // 20) + 1
+	rows = (constants.height // 20) + 1
+
+	force_grid = [[pygame.Vector2(0, 0) for _ in range(rows)] for _ in range(cols)]
+
+	max_total_force = 0.0
+	min_total_force = 1e30
+
+	# Calc forces and find max/min
+	for x in range(cols):
+		for y in range(rows):
+			forces = force_grid[x][y]
+
 			for body in bodies:
 				if isinstance(body, Static_body):
-					# Need to add the sum of forces (w sign) to the 2D vector
-					dx = (body.screen_x - (x*20))/constants.scale
-					dy = (body.screen_y - (y*20))/constants.scale
-					dist_sq = dx**2 + dy**2
-					if (dist_sq <= 0):
-						dist_sq = 10
-
-
+					dx = (body.screen_x - (x * 20)) / constants.scale
+					dy = (body.screen_y - (y * 20)) / constants.scale
+					dist_sq = dx**2 + dy**2 + 0.1
 					dist = math.sqrt(dist_sq)
 
 					force_mag = (constants.G * body.mass * constants.rocketMass) / dist_sq
 					forces.x += force_mag * (dx/dist)
 					forces.y += force_mag * (dy/dist)
 
-			angle = math.atan2(forces[1], forces[0])
-			angle = (angle * (180 / math.pi)) + 90
-			
-			total_force = math.sqrt(forces[0]**2 + forces[1]**2)
+					mag = forces.length()
+					if mag > max_total_force: max_total_force = mag
+					if mag < min_total_force: min_total_force = mag
 
-			if total_force > 0:
-				log_mag = math.log10(total_force)
-				log_min = math.log10(constants.MIN_FORCE)
-				log_max = math.log10(constants.MAX_FORCE)
-				
-				alpha = int(255 * (log_mag - log_min) / (log_max - log_min))
-				alpha = max(0, min(255, alpha))
+	max_total_force = max_total_force * 1e0
+
+	log_max = math.log10(max_total_force) if max_total_force > 0 else 0
+	log_min = math.log10(min_total_force) if min_total_force > 0 else 0
+	log_range = log_max - log_min
+
+	print(f"Min: {log_max} Max: {log_min}")
+
+	for x in range(cols):
+		for y in range(rows):
+			forces = force_grid[x][y]
+			mag = forces.length()
+
+			if mag > 0 and log_range > 0:
+				log_mag = math.log10(mag)
+				normalized_val = (log_mag - log_min) / log_range
+				sharper = normalized_val ** 20
+				color_int = int(sharper * 255)
 			else:
-				alpha = 0
-			
-			alpha = int(min(255, alpha * constants.opacityVal))
+				color_int = 0
 
-			center = pygame.Vector2((x*20), (y*20))
-
-			color = pygame.Color(alpha, alpha, alpha)
-
+			color_int = max(0, min(255, color_int))
+			angle = math.degrees(math.atan2(forces.y, forces.x)) + 90
+			center = pygame.Vector2(x * 20, y * 20)
+			color_int = int(min(255, color_int*constants.opacityVal))
+			if color_int < constants.thresh: color_int = 0
+			color = pygame.Color(color_int, color_int, color_int)
 			draw_arrow(screen, center, angle, color, 5)
-
