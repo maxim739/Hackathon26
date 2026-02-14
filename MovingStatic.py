@@ -2,9 +2,11 @@ import pygame
 import math
 
 
+
 # initialize pygame
 pygame.init()
 running = True
+gamestopped = False
 clock = pygame.time.Clock()
 
 width = 1000
@@ -12,12 +14,18 @@ height = 600
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Gravity Ball")
 
+#convert alpha keeps png transparent
+rocket_img = pygame.image.load("/Users/willgray/Desktop/Hackathon26/rocket.png").convert_alpha()
+#scales the image up..
+rocket_img = pygame.transform.scale(rocket_img, (20, 20))
+
+print(pygame.version.ver)
+
 
 G = 6.67430e-11
 #This scale stuff is stolen from a man on the internet
 scale = 6e-11
 dt = 864000 #TEN days in seconds
-gamestopped = False
 
 class Static_body:
     def __init__(self, x, y, mass, radius, color):
@@ -34,12 +42,13 @@ class Static_body:
 
 
 class Moving_body:
-    def __init__(self, x, y, vx, vy, mass, radius, color):
+    def __init__(self, x, y, vx, vy, mass, radius, color, image=None):
         self.x, self.y = x, y
         self.vx, self.vy = vx, vy
         self.mass = mass
         self.radius = radius
         self.color = color
+        self.image = image
     
     def update_position(self, bodies):
         #Euler Numerical Integration.. Not stable long term but should be fine for our game? 
@@ -87,12 +96,31 @@ class Moving_body:
 
         screen_x = int(self.x * scale + width // 2)
         screen_y = int(self.y * scale + height // 2)
-        pygame.draw.circle(screen, self.color, (screen_x, screen_y), self.radius)
+
+        if self.image:
+            #only roate when body is moving
+            if self.vx != 0 or self.vy != 0:
+                # atan2 returns angle between two axis in radians 
+                # use math.degrees to change into degrees
+                angle = math.degrees(math.atan2(self.vy, -self.vx))
+
+                angle += 90
+                # rotates the image... uses pygame transform
+                rotated_image = pygame.transform.rotate(self.image, angle)
+
+                #draws the image as a rect
+                rect = rotated_image.get_rect(center=(screen_x, screen_y))
+                screen.blit(rotated_image, rect)
+            else:
+                rect = self.image.get_rect(center=(screen_x, screen_y))
+                screen.blit(self.image, rect)
+        else:
+            pygame.draw.circle(screen, self.color, (screen_x, screen_y), self.radius)
 
 bodies = [
     Static_body(0, 0, 1.989e30, 8, (255, 255, 0)),
     Static_body(2e12, 0, 2e30, 8, (255,0,0)),
-    Moving_body(2.867e12, 0, 0, 6810, 8.681e25, 4, (100, 200, 255))
+    Moving_body(2.867e12, 0, 0, 6810, 8.681e25, 4, (100, 200, 255), rocket_img)
 ]
 
 while running: 
