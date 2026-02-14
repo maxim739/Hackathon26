@@ -51,7 +51,7 @@ while running:
                     break
 
             if can_place:
-                planets.game_bodies.append(asteroid)
+                planets.astrioid_bodies.append(asteroid)
 
     
     # Render the screen
@@ -64,6 +64,10 @@ while running:
             body.update_position(planets.game_bodies)
         body.draw(screen, constants.width, constants.height)
 
+    for asto in planets.astrioid_bodies:
+        asto.draw(screen, constants.width, constants.height)
+
+    print(planets.astrioid_bodies)
     pygame.display.flip()   # Updates the screen
 
 pygame.quit()

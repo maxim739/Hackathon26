@@ -29,3 +29,5 @@ game_bodies = [
     Static_body(300, 500, 1e30, 20, (0,0,0), planet8_img),
     Moving_body(100, 100, 20, 10, 8.681e25, 4, (100, 200, 255), rocket_img)
 ]
+
+astrioid_bodies = []
