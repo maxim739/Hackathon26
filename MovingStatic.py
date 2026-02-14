@@ -14,7 +14,7 @@ screen = pygame.display.set_mode((constants.width, constants.height))
 pygame.display.set_caption("Gravity Ball")
 
 #convert alpha keeps png transparent
-rocket_img = pygame.image.load("/Users/willgray/Desktop/Hackathon26/rocket.png").convert_alpha()
+rocket_img = pygame.image.load("sprites/rocket.png").convert_alpha()
 #scales the image up..
 rocket_img = pygame.transform.scale(rocket_img, (20, 20))
 
@@ -97,8 +97,8 @@ class Moving_body:
 
     def draw(self, screen):
 
-        screen_x = int(self.x * scale + width // 2)
-        screen_y = int(self.y * scale + height // 2)
+        screen_x = int(self.x * scale + constants.width // 2)
+        screen_y = int(self.y * scale + constants.height // 2)
 
         if self.image:
             #only roate when body is moving
