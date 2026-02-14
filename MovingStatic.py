@@ -40,17 +40,28 @@ class Moving_body:
         self.color = color
     
     def update_position(self, bodies):
+        #Euler Integration.. Not stable long term
+
+        #intialize force in x and y
         fx = fy = 0
+
+        #loop through bodies list
         for other in bodies:
             if other != self:
+                #get distance between bodies
                 dx = other.x - self.x
                 dy = other.y - self.y
                 r = math.sqrt(dx**2 + dy**2)
+
+                #this is to get rid of dividing by zero 
                 if r > 0:
+                    #newtons formula f = G Mm / r^2
                     f = G * self.mass * other.mass / (r**2)
+                    #break force up into x and y components
                     fx += f * dx / r
                     fy += f * dy / r
-    
+
+        #now that we have the force we can compute the acceleration velocity and position
         ax = fx / self.mass
         ay = fy / self.mass 
         self.vx += ax * dt
