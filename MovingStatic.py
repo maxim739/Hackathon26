@@ -17,10 +17,7 @@ black = (0, 0, 0)
 
 G = 6.67430e-11
 scale = 6e-11
-zoom_scale = 1e-9
 dt = 864000 #ten days in seconds
-
-zoomed = False
 
 class Static_body:
     def __init__(self, x, y, mass, radius, color):
@@ -31,10 +28,8 @@ class Static_body:
     
     def draw(self, screen):
         
-        current_scale = zoom_scale if zoomed else scale
-
-        screen_x = int(self.x * current_scale  + width // 2)
-        screen_y = int(self.y * current_scale  + height // 2)
+        screen_x = int(self.x * scale  + width // 2)
+        screen_y = int(self.y * scale  + height // 2)
         pygame.draw.circle(screen, self.color, (screen_x, screen_y), self.radius)
 
 
@@ -64,15 +59,11 @@ class Moving_body:
         self.vy += ay * dt
         self.x += self.vx * dt
         self.y += self.vy * dt
-
-        current_scale = zoom_scale if zoomed else scale
     
     def draw(self, screen):
 
-        current_scale = zoom_scale if zoomed else scale
-
-        screen_x = int(self.x * current_scale + width // 2)
-        screen_y = int(self.y * current_scale + height // 2)
+        screen_x = int(self.x * scale + width // 2)
+        screen_y = int(self.y * scale + height // 2)
         pygame.draw.circle(screen, self.color, (screen_x, screen_y), self.radius)
 
 bodies = [
@@ -85,10 +76,6 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_z:
-                zoomed = not zoomed
     
     screen.fill((0,0,0))
 
