@@ -2,28 +2,27 @@ import pygame
 import math
 import constants
 
-#This scale stuff is stolen from a man on the internet
-scale = 6e-11
-dt = 864000 #TEN days in seconds
-gamestopped = False
 
 class Static_body:
     def __init__(self, x, y, mass, radius, color):
-        self.x, self.y = x,y
+        self.screen_x = x
+        self.screen_y = y
+        self.x = x / constants.scale
+        self.y = y / constants.scale
         self.mass = mass
         self.radius = radius
         self.color = color
     
     def draw(self, screen, width, height):
-        
-        screen_x = int(self.x * scale  + width // 2)
-        screen_y = int(self.y * scale  + height // 2)
-        pygame.draw.circle(screen, self.color, (screen_x, screen_y), self.radius)
+        pygame.draw.circle(screen, self.color, (self.screen_x, self.screen_y), self.radius)
 
 
 class Moving_body:
     def __init__(self, x, y, vx, vy, mass, radius, color):
-        self.x, self.y = x, y
+        self.screen_x = x
+        self.screen_y = y
+        self.x = x / constants.scale
+        self.y = y / constants.scale
         self.vx, self.vy = vx, vy
         self.mass = mass
         self.radius = radius
@@ -45,7 +44,7 @@ class Moving_body:
                 r = math.sqrt(dx**2 + dy**2)
 
                 #this is to get rid of dividing by zero 
-                if r > (other.radius + self.radius)/scale:
+                if r > (other.radius + self.radius)/constants.scale:
                     #newtons formula f = G Mm / r^2
                     f = constants.G * self.mass * other.mass / (r**2)
                     #break force up into x and y components
@@ -59,10 +58,10 @@ class Moving_body:
         #now that we have the force we can compute the acceleration velocity and position
         ax = fx / self.mass
         ay = fy / self.mass 
-        self.vx += ax * dt
-        self.vy += ay * dt
-        self.x += self.vx * dt
-        self.y += self.vy * dt
+        self.vx += ax * constants.dt
+        self.vy += ay * constants.dt
+        self.x += self.vx * constants.dt
+        self.y += self.vy * constants.dt
         
     
     def reset(self):
@@ -77,6 +76,6 @@ class Moving_body:
 
     def draw(self, screen, width, height):
 
-        screen_x = int(self.x * scale + width // 2)
-        screen_y = int(self.y * scale + height // 2)
+        screen_x = int(self.x * constants.scale + width // 2)
+        screen_y = int(self.y * constants.scale + height // 2)
         pygame.draw.circle(screen, self.color, (screen_x, screen_y), self.radius)

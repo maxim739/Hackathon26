@@ -12,6 +12,9 @@ fps = 60
 
 # Physics constants
 G = 6.67430e-11
+scale = 6e-11
+dt = 864000 #TEN days in seconds
+rocketMass = 8e25
 
 # Screen values
 width = 1300
@@ -21,3 +24,4 @@ height = 800
 red = pygame.Color(255, 0, 0)
 black = (0, 0, 0)
 blue = pygame.Color("dodgerblue")
+arrow = pygame.Color(50, 50, 50)
