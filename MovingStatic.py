@@ -14,8 +14,10 @@ pygame.display.set_caption("Gravity Ball")
 
 
 G = 6.67430e-11
+#This scale stuff is stolen from a man on the internet
 scale = 6e-11
-dt = 864000 #ten days in seconds
+dt = 864000 #TEN days in seconds
+gamestopped = False
 
 class Static_body:
     def __init__(self, x, y, mass, radius, color):
@@ -40,7 +42,8 @@ class Moving_body:
         self.color = color
     
     def update_position(self, bodies):
-        #Euler Integration.. Not stable long term
+        #Euler Numerical Integration.. Not stable long term but should be fine for our game? 
+        #Might have to change it in the fututer
 
         #intialize force in x and y
         fx = fy = 0
@@ -68,7 +71,18 @@ class Moving_body:
         self.vy += ay * dt
         self.x += self.vx * dt
         self.y += self.vy * dt
+        
     
+    def reset(self):
+        self.x = 2.867e12
+        self.y = 0
+        self.vx = 0
+        self.vy = 6810
+    
+    def stop(self):
+        self.vx = 0
+        self.vy = 0
+
     def draw(self, screen):
 
         screen_x = int(self.x * scale + width // 2)
@@ -85,14 +99,29 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        
+        #Added a reset and stop button also added new boolean called game gamestop
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_r:
+                gamestopped = False
+                for body in bodies:
+                    if isinstance(body, Moving_body):
+                        body.reset()
+            if event.key == pygame.K_s:
+                gamestopped = True
+                for body in bodies:
+                    if isinstance(body, Moving_body):
+                        body.stop()
     
     screen.fill((0,0,0))
 
     for body in bodies:
-        if isinstance(body, Moving_body):
+        #This was CHAT... Had no clue how to make only moving bodies position update
+        #Not sure what "isinstance" is
+        if isinstance(body, Moving_body) and gamestopped == False:
             body.update_position(bodies)
         body.draw(screen)
-    
+
     pygame.display.flip()
     clock.tick(60)
 
