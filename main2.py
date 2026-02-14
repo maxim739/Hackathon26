@@ -8,7 +8,7 @@ import pygame
 import sys
 import math
 from bodies import *
-from vectorField import render
+from vectorField import *
 import constants
 
 pygame.init()

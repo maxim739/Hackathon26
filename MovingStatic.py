@@ -30,6 +30,12 @@ planet3_img = pygame.transform.scale(planet3_img, (100, 100))
 planet4_img = pygame.image.load("sprites/planet4.png").convert_alpha()
 planet4_img = pygame.transform.scale(planet4_img, (100, 100))
 
+planet5_img = pygame.image.load("sprites/planet5.png").convert_alpha()
+planet5_img = pygame.transform.scale(planet5_img, (100, 100))
+
+goal_img = pygame.image.load("sprites/goalAura.png").convert_alpha()
+goal_img = pygame.transform.scale(goal_img, (100, 100))
+
 
 G = 6.67430e-11
 #This scale stuff is stolen from a man on the internet
@@ -138,6 +144,8 @@ bodies = [
     Static_body(4e12, 2e12, 2e30, 20, (255,0,0), planet2_img),
     Static_body(6e12, 0, 1e30, 20, (0,0,0), planet3_img),
     Static_body(8e12, 0, 8e21, 20, (0,0,0), planet4_img),
+    Static_body(-5e12, 0, 2e31, 20, (0,0,0), planet5_img),
+    Static_body(8e12, -5e12, 8e28, 20, (0,0,0), goal_img),
     Moving_body(2.867e12, 0, 0, 6810, 8.681e25, 4, (100, 200, 255), rocket_img)
 ]
 
