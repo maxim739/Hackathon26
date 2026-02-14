@@ -30,7 +30,12 @@ def drawStartWindow(screen):
     screen.blit(IMAGES["rotatedRocket"], (200, 600))
 
     text_surf = titleFont.render("ROCKETMAN!", True, (255, 255, 255))
+    text1_surf = buttonFont.render("Made by Maxim DeJong, William Gray, and Saabir Yousuf", True, (255, 255, 255))
+    text2_surf = buttonFont.render("McGill Physics Hackathon 2026", True, (255, 255, 255))
+
     screen.blit(text_surf, (constants.width/2-250, constants.height/5))
+    screen.blit(text1_surf, (constants.width/2-275, constants.height*4/5+110))
+    screen.blit(text2_surf, (constants.width/2-150, constants.height*4/5+135))
 
     draw_button(screen, " Start ! ", start_button, constants.startButton)
 
