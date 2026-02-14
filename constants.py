@@ -1,9 +1,18 @@
-# Holds constant values and some colors for the vectorField.py file
+'''
+This script holds all of the constants that are needed
+    throughout the project to ensure that necessary
+    variables are consistent throughout the project
+'''
+
+
 import pygame
 
+# Game constants
+fps = 60
+
 # Screen values
-width = 500
-height = 500
+width = 1000
+height = 600
 
 # Colors
 
