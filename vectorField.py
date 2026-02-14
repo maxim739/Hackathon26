@@ -33,22 +33,36 @@ def draw_arrow(
     pygame.draw.polygon(surface, color, rotated_points)
 
 
+def renderTest(screen, bodies):
+
+
+	center
+	angle
+	
+	draw_arrow(screen, center, angle, constants.blue, 5)
+
+
 def render(screen, bodies):
 	'''Renders a vector field based on passed bodies'''
-	for x in range((constants.width // 20)+1):
-		for y in range((constants.height // 20)+1):	# For each vector
+	for x in range((constants.width // 200)+1):
+		for y in range((constants.height // 200)+1):	# For each vector
 			forces = pygame.Vector2(0, 0)
 			for body in bodies:
-				if isinstance(body, Moving_body):
+				if isinstance(body, Static_body):
 					# Need to add the sum of forces (w sign) to the 2D vector
-					r = ((body.x - x) ** 2) + ((body.y - y) ** 2)
-					force = (constants.G * body.mass) / ((r) ** 2)
-					ang = math.cos(body.x/r)	# Angle from vertical up
-					forces.x += force * math.cos(ang)
-					forces.y += force * math.sin(ang)
+					print("body")
+					print(body.x)
+					r_sqrt = ((body.x - x) ** 2) + ((body.y - y) ** 2)
+					r = math.sqrt(r_sqrt)
+					if r < 1: continue
+					force = (constants.G * body.mass) / r_sqrt
+					
+					forces.x += force * ((body.x - x) / r)
+					forces.y += force * ((body.y - y) / r)
+
+			print(forces)
 
 			angle = math.atan2(forces.y, forces.x)
-			mag = math.sqrt((forces.x ** 2) + (forces.y ** 2))
 			center = pygame.Vector2((x*20), (y*20))
 
 			draw_arrow(screen, center, angle, constants.blue, 5)
