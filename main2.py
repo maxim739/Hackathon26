@@ -60,7 +60,7 @@ while running:
     # Render the screen
     screen.fill(constants.black)
 
-    new_but = Button("New", 400, 400, 100, 100, (50, 50, 50), (150, 150, 150))
+    new_but = Button("New", 1150, 700, 100, 50, (50, 50, 50), (150, 150, 150))
     new_but.draw(screen)
     
     if event.type == pygame.MOUSEBUTTONDOWN and new_but.x < mouse[0] < new_but.x + new_but.width and new_but.y < mouse[1] < new_but.y + new_but.height:
