@@ -1,6 +1,6 @@
 import pygame
 import math
-import sys
+
 
 # initialize pygame
 pygame.init()
@@ -12,8 +12,6 @@ height = 600
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Gravity Ball")
 
-red = (255, 0, 0)
-black = (0, 0, 0)
 
 G = 6.67430e-11
 scale = 6e-11
