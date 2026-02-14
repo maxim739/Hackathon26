@@ -34,7 +34,7 @@ while running:
         5.972e30, 
         12, 
         (200, 150, 255), 
-        planets.planet1_img)
+        planets.astro_img)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -53,7 +53,7 @@ while running:
                     break
 
             if can_place:
-                planets.astrioid_bodies.append(asteroid)
+                planets.game_bodies.append(asteroid)
                 astromouse = False
 
     
@@ -77,10 +77,6 @@ while running:
             body.update_position(planets.game_bodies)
         body.draw(screen, constants.width, constants.height)
 
-    for asto in planets.astrioid_bodies:
-        asto.draw(screen, constants.width, constants.height)
-
-    print(planets.astrioid_bodies)
     pygame.display.flip()   # Updates the screen
 
 pygame.quit()

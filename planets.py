@@ -4,7 +4,7 @@ from bodies import Static_body, Moving_body
 
 def load_planet(path):
     img = pygame.image.load(path).convert_alpha()
-    return pygame.transform.scale(img, (30, 30))
+    return pygame.transform.scale(img, (100, 100))
 
 planet1_img = load_planet("sprites/planet1.png")
 planet2_img = load_planet("sprites/planet2.png")
@@ -15,7 +15,12 @@ planet6_img = load_planet("sprites/planet6.png")
 planet7_img = load_planet("sprites/planet7.png")
 planet8_img = load_planet("sprites/planet8.png")
 goal_img    = load_planet("sprites/goalAura.png")
-rocket_img  = load_planet("sprites/rocket.png")
+
+rocket_img = pygame.image.load("sprites/rocket.png").convert_alpha()
+rocket_img = pygame.transform.scale(rocket_img, (20, 20))
+
+astro_img = pygame.image.load("sprites/planet8.png").convert_alpha()
+astro_img = pygame.transform.scale(astro_img, (30, 30))
 
 game_bodies = [
     Static_body(600, 600, 5e28, 20, (255,255,0), planet1_img),
