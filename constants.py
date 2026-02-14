@@ -12,7 +12,7 @@ fps = 60
 
 # Physics constants
 G = 6.67430e-11
-
+scale = 6e-11
 # Screen values
 width = 1300
 height = 800
