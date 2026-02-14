@@ -9,6 +9,9 @@ import pygame
 
 # Game constants
 fps = 60
+STATE_LANDING = "landing"
+STATE_TUT = "tutorial"
+STATE_GAME = "game"
 
 # Physics constants
 G = 6.67430e-11
@@ -31,3 +34,6 @@ red = pygame.Color(255, 0, 0)
 black = (0, 0, 0)
 blue = pygame.Color("dodgerblue")
 arrow = pygame.Color(50, 50, 50)
+
+startButton = pygame.Color(250, 0, 250)
+introButton = pygame.Color(250, 250, 0)

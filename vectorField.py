@@ -70,7 +70,7 @@ def render(screen, bodies):
 	log_min = math.log10(min_total_force) if min_total_force > 0 else 0
 	log_range = log_max - log_min
 
-	print(f"Min: {log_max} Max: {log_min}")
+	#print(f"Min: {log_max} Max: {log_min}")
 
 	for x in range(cols):
 		for y in range(rows):
