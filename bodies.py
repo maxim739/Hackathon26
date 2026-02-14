@@ -89,15 +89,17 @@ class Moving_body:
         
                 else:
                     if not self.dead:
-                        screen_x = int(self.x * constants.scale  + constants.width // 2)
-                        screen_y = int(self.y * constants.scale  + constants.height // 2)
+                        screen_x = int(self.x * constants.scale)
+                        screen_y = int(self.y * constants.scale)
 
                         explosion = Explosion(screen_x,screen_y)
                         explosion_group.add(explosion)
 
-                        self.dead = True
                         self.vx = 0
                         self.vy = 0
+                        self.x = 100000 // constants.scale
+                        self.y = 100000 // constants.scale
+                        self.dead = True
                     return
 
         #now that we have the force we can compute the acceleration velocity and position
@@ -121,8 +123,8 @@ class Moving_body:
 
     def draw(self, screen, width, height):
 
-        screen_x = self.x * constants.scale 
-        screen_y = self.y * constants.scale
+        screen_x = int(self.x * constants.scale)
+        screen_y = int(self.y * constants.scale)
 
         if self.image:
             #only roate when body is moving

@@ -73,9 +73,12 @@ while running:
 
     #Draw all bodies and update position of moving body
     for body in planets.game_bodies:
-        if isinstance(body, Moving_body) and gameStopped == False:
+        if isinstance(body, Moving_body) and gameStopped == False and not body.dead:
             body.update_position(planets.game_bodies)
         body.draw(screen, constants.width, constants.height)
+    
+    explosion_group.update()
+    explosion_group.draw(screen)
 
     pygame.display.flip()   # Updates the screen
 
