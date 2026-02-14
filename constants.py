@@ -36,4 +36,4 @@ blue = pygame.Color("dodgerblue")
 arrow = pygame.Color(50, 50, 50)
 
 startButton = pygame.Color(250, 0, 250)
-introButton = pygame.Color(250, 250, 0)
+introButton = pygame.Color(250, 0, 250)
