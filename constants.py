@@ -16,11 +16,16 @@ scale = 6e-11
 dt = 864000 #TEN days in seconds
 rocketMass = 8e25
 
+MAX_FORCE = 1e30
+MIN_FORCE = 1e20
+
 # Screen values
 width = 1300
 height = 800
 
 # Colors
+opacityVal = 1.5
+
 red = pygame.Color(255, 0, 0)
 black = (0, 0, 0)
 blue = pygame.Color("dodgerblue")

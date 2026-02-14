@@ -30,6 +30,7 @@ bodies = [
 
 render(screen, bodies)
 
+
 while running:
     clock.tick(constants.fps)
 

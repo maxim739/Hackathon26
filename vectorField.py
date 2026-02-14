@@ -36,8 +36,6 @@ def draw_arrow(
 def render(screen, bodies):
 	'''Renders a vector field based on passed bodies'''
 	# Need to find max and min force values to normalize to the arrows
-
-
 	for x in range((constants.width // 20)+1):
 		for y in range((constants.height // 20)+1):	# For each vector
 			forces = pygame.Vector2(0, 0)
@@ -59,10 +57,24 @@ def render(screen, bodies):
 
 			angle = math.atan2(forces[1], forces[0])
 			angle = (angle * (180 / math.pi)) + 90
+			
+			total_force = math.sqrt(forces[0]**2 + forces[1]**2)
+
+			if total_force > 0:
+				log_mag = math.log10(total_force)
+				log_min = math.log10(constants.MIN_FORCE)
+				log_max = math.log10(constants.MAX_FORCE)
+				
+				alpha = int(255 * (log_mag - log_min) / (log_max - log_min))
+				alpha = max(0, min(255, alpha))
+			else:
+				alpha = 0
+			
+			alpha = int(min(255, alpha * constants.opacityVal))
 
 			center = pygame.Vector2((x*20), (y*20))
 
-			color = pygame.Color()
+			color = pygame.Color(alpha, alpha, alpha)
 
-			draw_arrow(screen, center, angle, constants.arrow, 5)
+			draw_arrow(screen, center, angle, color, 5)
 
