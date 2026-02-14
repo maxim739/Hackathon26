@@ -23,15 +23,15 @@ astro_img = pygame.image.load("sprites/planet8.png").convert_alpha()
 astro_img = pygame.transform.scale(astro_img, (30, 30))
 
 game_bodies = [
-    Static_body(600, 600, 5e28, 20, (255,255,0), planet1_img),
-    Static_body(200, 300, 2e30, 20, (255,0,0), planet2_img),
-    Static_body(300, 300, 1e30, 20, (0,0,0), planet3_img),
-    Static_body(400, 400, 8e21, 20, (0,0,0), planet4_img),
-    Static_body(500, 500, 2e31, 20, (0,0,0), planet5_img),
-    Static_body(600, 500, 8e28, 20, (0,0,0), goal_img),
-    Static_body(700, 500, 1e30, 20, (0,0,0), planet6_img),
-    Static_body(800, 500, 1e30, 20, (0,0,0), planet7_img),
-    Static_body(300, 500, 1e30, 20, (0,0,0), planet8_img),
+    Static_body(600, 600, 5e28, 25, (255,255,0), planet1_img),
+    Static_body(200, 300, 2e30, 25, (255,0,0), planet2_img),
+    Static_body(300, 300, 1e30, 25, (0,0,0), planet3_img),
+    Static_body(400, 400, 8e21, 25, (0,0,0), planet4_img),
+    Static_body(500, 500, 2e31, 25, (0,0,0), planet5_img),
+    Static_body(600, 500, 8e28, 25, (0,0,0), goal_img),
+    Static_body(700, 500, 1e30, 25, (0,0,0), planet6_img),
+    Static_body(800, 500, 1e30, 25, (0,0,0), planet7_img),
+    Static_body(300, 500, 1e30, 25, (0,0,0), planet8_img),
     Moving_body(100, 100, 20, 10, 8.681e25, 4, (100, 200, 255), rocket_img)
 ]
 
