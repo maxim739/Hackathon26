@@ -1,5 +1,6 @@
 import pygame
 import constants
+from assets import IMAGES
 
 pygame.init()
 pygame.font.init()
@@ -17,6 +18,16 @@ def draw_button(screen, text, rect, color):
     screen.blit(text_surf, text_rect)
 
 def drawStartWindow(screen):
+    screen.blit(IMAGES["planet1"], (300, -25))
+    screen.blit(IMAGES["planet2"], (900, 250))
+    screen.blit(IMAGES["planet3"], (100, 200))
+    screen.blit(IMAGES["planet5"], (1300, 100))
+    screen.blit(IMAGES["planet6"], (400, 300))
+    screen.blit(IMAGES["planet7"], (1000, 0))
+    screen.blit(IMAGES["planet8"], (700, 400))
+    screen.blit(IMAGES["goalAura"], (1000, 600))
+    screen.blit(IMAGES["rotatedRocket"], (200, 600))
+
 
     text_surf = titleFont.render("ROCKETMAN!", True, (255, 255, 255))
     screen.blit(text_surf, (constants.width/2-250, constants.height/5))

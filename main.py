@@ -10,6 +10,7 @@ from bodies import *
 from vectorField import render
 from windows import *
 import constants
+from assets import load_assets, IMAGES
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -21,6 +22,8 @@ gameStopped = False
 screen_res = (constants.width, constants.height)
 pygame.display.set_caption("Rocket Man!")
 screen = pygame.display.set_mode(screen_res)
+
+load_assets()
 
 bodies = [
     Static_body(600, 600, 2e30, 16, (255,255,0)),
