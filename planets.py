@@ -26,7 +26,7 @@ game_bodies = [
     Static_body(300, 100, 5e28, 25, (255,255,0), planet1_img),
     Static_body(100, 300, 2e30, 25, (255,0,0), planet2_img),
     Static_body(400, 200, 1e30, 25, (0,0,0), planet3_img),
-    Static_body(480, 600, 8e21, 25, (0,0,0), planet4_img),
+    Static_body(480, 600, 8e28, 25, (0,0,0), planet4_img),
     
     Static_body(180, 550, 2e31, 25, (0,0,0), planet5_img),
     Static_body(1100, 650, 8e28, 25, (0,0,0), goal_img, is_goal=True),
