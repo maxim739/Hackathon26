@@ -22,6 +22,8 @@ rocketMass = 8e25
 MAX_FORCE = 1e31
 MIN_FORCE = 1e20
 
+MAX_ASTEROIDS = 10
+
 # Screen values
 width = 1300
 height = 800

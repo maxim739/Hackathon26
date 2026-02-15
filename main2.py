@@ -27,6 +27,8 @@ import planets
 initial_rocket_index = None
 initial_rocket_state = None
 
+asteroids_placed = 0
+
 for i, body in enumerate(planets.game_bodies):
     if isinstance(body, Moving_body):
         initial_rocket_index = i
@@ -67,6 +69,7 @@ def restart_game():
     # Reset game state flags
     gameStopped = False
     astromouse = False
+    asteroids_placed = 0
     
     print("Game restarted!")
 
@@ -95,17 +98,25 @@ while running:
         #Place an asteroid where the mouse is
         if event.type == pygame.MOUSEBUTTONDOWN and astromouse == True:
             can_place = True
+
+            if asteroids_placed >= constants.MAX_ASTEROIDS:
+                can_place = False
+                astromouse = False
+                print('max astro')
+
             
             #Cannot place an asteroid on top of another body
-            for body in planets.game_bodies:
-                body_screen_x = int(body.x * constants.scale + constants.width // 2)
-                body_screen_y = int(body.y * constants.scale + constants.height // 2)
-                if math.hypot(mouse[0] - body_screen_x, mouse[1] - body_screen_y) <= body.radius:
-                    can_place = False
-                    break
+            if can_place:
+                for body in planets.game_bodies:
+                    body_screen_x = int(body.x * constants.scale + constants.width // 2)
+                    body_screen_y = int(body.y * constants.scale + constants.height // 2)
+                    if math.hypot(mouse[0] - body_screen_x, mouse[1] - body_screen_y) <= body.radius:
+                        can_place = False
+                        break
 
             if can_place:
                 planets.game_bodies.append(asteroid)
+                asteroids_placed += 1
                 astromouse = False
 
     
