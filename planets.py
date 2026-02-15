@@ -19,8 +19,8 @@ goal_img    = load_planet("sprites/goalAura.png")
 rocket_img = pygame.image.load("sprites/rocket.png").convert_alpha()
 rocket_img = pygame.transform.scale(rocket_img, (20, 20))
 
-astro_img = pygame.image.load("sprites/planet8.png").convert_alpha()
-astro_img = pygame.transform.scale(astro_img, (30, 30))
+astro_img = pygame.image.load("sprites/asteroid.png").convert_alpha()
+astro_img = pygame.transform.scale(astro_img, (45, 45))
 
 game_bodies = [
     Static_body(600, 600, 5e28, 25, (255,255,0), planet1_img),
