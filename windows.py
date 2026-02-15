@@ -11,6 +11,7 @@ tutFont = pygame.font.Font('PixelPurl.ttf', 40)
 
 start_button = pygame.Rect(constants.width/2-100, constants.height*4/5, 200, 50)
 okay_button = pygame.Rect(constants.width/2-100, constants.height*4/5, 200, 50)
+launch_button = pygame.Rect(constants.width*7/8, constants.height*7/8, 200, 50)
 
 def draw_button(screen, text, rect, color):
     pygame.draw.rect(screen, color, rect)
@@ -61,3 +62,7 @@ def drawIntroWindow(screen):
     screen.blit(text4_surf, (constants.width/2-175, constants.height/5+75)
                 )
     draw_button(screen, " Ready! ", okay_button, constants.introButton)
+
+def drawGameWindow(screen):
+    # Launch Button
+    draw_button(screen, " Launch! ", launch_button, constants.startButton)
