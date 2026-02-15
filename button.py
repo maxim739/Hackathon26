@@ -14,12 +14,14 @@ class Button:
         self.font = pygame.font.Font('PixelPurl.ttf', 30)
 
 
-    def draw(self, screen):
+    def draw(self, screen, selected=False):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
 
 
-        if (self.x + self.width) > mouse[0] > self.x and self.y + self.height > mouse[1] > self.y:
+        if selected:
+            pygame.draw.rect(screen, self.active_color, (self.x, self.y, self.width, self.height))
+        elif (self.x + self.width) > mouse[0] > self.x and self.y + self.height > mouse[1] > self.y:
             pygame.draw.rect(screen, self.active_color, (self.x, self.y, self.width, self.height))
             if click[0] == 1 and self.action is not None:
                 self.action()
