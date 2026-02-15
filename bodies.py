@@ -142,7 +142,8 @@ class Moving_body:
                 rect = rotated_image.get_rect(center=(screen_x, screen_y))
                 screen.blit(rotated_image, rect)
             else:
+                rotated_image = pygame.transform.rotate(self.image, 210)
                 rect = self.image.get_rect(center=(screen_x, screen_y))
-                screen.blit(self.image, rect)
+                screen.blit(rotated_image, rect)
         else:
             pygame.draw.circle(screen, self.color, (self.x, self.y), self.radius)
