@@ -2,6 +2,7 @@ import pygame
 import math
 import constants
 
+game_start = False
 
 class Static_body:
     def __init__(self, x, y, mass, radius, color, image=None):
@@ -73,7 +74,7 @@ class Moving_body:
 
         #loop through bodies list
         for other in bodies:
-            if other != self:
+            if other != self and game_start:
                 #get distance between bodies
                 dx = other.x - self.x
                 dy = other.y - self.y

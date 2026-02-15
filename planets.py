@@ -32,7 +32,7 @@ game_bodies = [
     Static_body(700, 500, 1e30, 25, (0,0,0), planet6_img),
     Static_body(800, 500, 1e30, 25, (0,0,0), planet7_img),
     Static_body(300, 500, 1e30, 25, (0,0,0), planet8_img),
-    Moving_body(100, 100, 20, 10, 8.681e25, 4, (100, 200, 255), rocket_img)
+    Moving_body(100, 100, 0, 0, 8.681e25, 4, (100, 200, 255), rocket_img)
 ]
 
 astrioid_bodies = []

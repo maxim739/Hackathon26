@@ -6,6 +6,7 @@ main is the entry point for the game that serves as the
 import pygame
 import sys
 import math
+import bodies
 from bodies import *
 from vectorField import render
 import constants
@@ -45,6 +46,10 @@ for i, body in enumerate(planets.game_bodies):
 
 initial_bodies_count = len(planets.game_bodies)
 
+def start_game():
+    bodies.game_start = True
+
+
 def restart_game():
     """Reset the game to its initial state"""
     global gameStopped, astromouse, asteroids_placed
@@ -70,6 +75,7 @@ def restart_game():
     gameStopped = False
     astromouse = False
     asteroids_placed = 0
+    bodies.game_start = False
     
     print("Game restarted!")
 
@@ -95,6 +101,8 @@ while running:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_r:
                 restart_game()
+            if event.key == pygame.K_s:
+                start_game()
 
         #Place an asteroid where the mouse is
         if event.type == pygame.MOUSEBUTTONDOWN and astromouse == True:
@@ -124,10 +132,16 @@ while running:
     # Render the screen
     screen.fill(constants.black)
 
-    button_text = f"Asteroids ({asteroids_placed} / {constants.MAX_ASTEROIDS})"
+    button_text = f"Asteroids: ({asteroids_placed} / {constants.MAX_ASTEROIDS})"
     new_but = Button(button_text, 1050, 700, 200, 50, (50, 50, 50), (150, 150, 150))
     new_but.draw(screen)
-    
+
+    start_but = Button("BLAST OFF", 550, 700, 200, 50, constants.startButton, (129, 0, 209))
+    start_but.draw(screen)
+
+    if event.type == pygame.MOUSEBUTTONDOWN and start_but.x < mouse[0] < start_but.x + start_but.width and start_but.y < mouse[1] < start_but.y + start_but.height:
+        start_game()
+
     if event.type == pygame.MOUSEBUTTONDOWN and new_but.x < mouse[0] < new_but.x + new_but.width and new_but.y < mouse[1] < new_but.y + new_but.height:
         astromouse = True
 
