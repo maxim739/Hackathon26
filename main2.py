@@ -136,8 +136,9 @@ while running:
     new_but = Button(button_text, 1050, 700, 200, 50, (50, 50, 50), (150, 150, 150))
     new_but.draw(screen)
 
-    start_but = Button("BLAST OFF", 550, 700, 200, 50, constants.startButton, (129, 0, 209))
-    start_but.draw(screen)
+    if not bodies.game_start:
+        start_but = Button("BLAST OFF", 550, 700, 200, 50, constants.startButton, (129, 0, 209))
+        start_but.draw(screen)
 
     if event.type == pygame.MOUSEBUTTONDOWN and start_but.x < mouse[0] < start_but.x + start_but.width and start_but.y < mouse[1] < start_but.y + start_but.height:
         start_game()
