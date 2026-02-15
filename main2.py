@@ -47,7 +47,7 @@ initial_bodies_count = len(planets.game_bodies)
 
 def restart_game():
     """Reset the game to its initial state"""
-    global gameStopped, astromouse
+    global gameStopped, astromouse, asteroids_placed
     
     # Remove all asteroids (any bodies added after the initial count)
     planets.game_bodies = planets.game_bodies[:initial_bodies_count]
@@ -76,6 +76,7 @@ def restart_game():
 
 
 while running:
+    print(asteroids_placed)
     clock.tick(constants.fps)
     mouse = pygame.mouse.get_pos()
 
@@ -131,7 +132,7 @@ while running:
 
     if astromouse:
         asteroid.draw(screen, constants.width, constants.height)
-    print(astromouse)
+    #print(astromouse)
 
 
     #Draw all bodies and update position of moving body
