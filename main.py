@@ -20,8 +20,6 @@ running = True
 gameStopped = False
 place_ast = False
 launched = False
-astromouse = False
-can_place = False
 
 screen_res = (constants.width, constants.height)
 pygame.display.set_caption("Rocket Man!")
@@ -103,27 +101,18 @@ while running:
             elif current_state == constants.STATE_TUT and okay_button.collidepoint(event.pos):
                 current_state = constants.STATE_GAME
             elif current_state == constants.STATE_GAME:
-                if astromouse:
-                    can_place = True
-                elif launch_button.collidepoint(event.pos):
-                    launched = True 
-
-                if asteroids_placed >= constants.MAX_ASTEROIDS:
-                    can_place = False
-                    astromouse = False
-                    print('max astro')
-
-            
-                #Cannot place an asteroid on top of another body
-                if can_place:
-                    for body in planets.game_bodies:
+                if launch_button.collidepoint(event.pos):
+                    launched = True
+                elif place_ast and asteroids_placed < constants.MAX_ASTEROIDS:
+                    # We are allowed by the game to place an asteriod
+                    for body in planets.game_bodies:    # We make sure we aren't in a planet
                         body_screen_x = int(body.x * constants.scale + constants.width // 2)
                         body_screen_y = int(body.y * constants.scale + constants.height // 2)
                         if math.hypot(mouse_pos[0] - body_screen_x, mouse_pos[1] - body_screen_y) <= body.radius:
                             can_place = False
                             break
-
-                if can_place:
+                    
+                    # We are able to place the asteroid here
                     planets.game_bodies.append(asteriod)
                     asteroids_placed += 1
                     astromouse = False
@@ -136,6 +125,9 @@ while running:
     elif current_state == constants.STATE_TUT:
         drawIntroWindow(screen)
     elif current_state == constants.STATE_GAME:
+        #render(screen, planets.game_bodies)
+        place_ast = True
+
         if launched == False:
             render(screen, planets.game_bodies)
 
@@ -147,7 +139,7 @@ while running:
         text_surf = buttonFont.render(asteriod_text, True, (255, 255, 255))
         screen.blit(text_surf, (constants.width/8, constants.height*7/8))
 
-        render(screen, planets.game_bodies)
+        
 
         for body in planets.game_bodies:
             if isinstance(body, Moving_body) and gameStopped == False and not body.dead:
@@ -156,6 +148,8 @@ while running:
         
         explosion_group.update()
         explosion_group.draw(screen)
+
+
 
     pygame.display.flip()   # Updates the screen
 
