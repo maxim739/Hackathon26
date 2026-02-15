@@ -11,6 +11,7 @@ from bodies import *
 from vectorField import render
 import constants
 from button import Button
+import windows
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -67,6 +68,7 @@ def restart_game():
         rocket.vx = initial_rocket_state['vx']
         rocket.vy = initial_rocket_state['vy']
         rocket.dead = False
+        rocket.won = False
     
     # Clear any explosions
     explosion_group.empty()
@@ -101,8 +103,6 @@ while running:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_r:
                 restart_game()
-            if event.key == pygame.K_s:
-                start_game()
 
         #Place an asteroid where the mouse is
         if event.type == pygame.MOUSEBUTTONDOWN and astromouse == True:
@@ -150,15 +150,22 @@ while running:
         asteroid.draw(screen, constants.width, constants.height)
     #print(astromouse)
 
+    rocket = None
 
     #Draw all bodies and update position of moving body
     for body in planets.game_bodies:
-        if isinstance(body, Moving_body) and gameStopped == False and not body.dead:
-            body.update_position(planets.game_bodies)
+        if isinstance(body, Moving_body):
+            rocket = body
+            if gameStopped == False and not body.dead and not body.won:
+                body.update_position(planets.game_bodies)
         body.draw(screen, constants.width, constants.height)
     
     explosion_group.update()
     explosion_group.draw(screen)
+
+    if rocket and rocket.won:
+        windows.drawWinWindow(screen)
+
 
     pygame.display.flip()   # Updates the screen
 

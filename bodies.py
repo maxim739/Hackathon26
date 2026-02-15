@@ -5,7 +5,7 @@ import constants
 game_start = False
 
 class Static_body:
-    def __init__(self, x, y, mass, radius, color, image=None):
+    def __init__(self, x, y, mass, radius, color, image=None, is_goal = False):
         self.screen_x = x
         self.screen_y = y
         self.x = x / constants.scale
@@ -14,6 +14,7 @@ class Static_body:
         self.radius = radius
         self.color = color
         self.image = image
+        self.is_goal = is_goal
     
     def draw(self, screen, width, height):
         #pygame.draw.circle(screen, self.color, (self.screen_x, self.screen_y), self.radius)
@@ -64,6 +65,7 @@ class Moving_body:
         self.color = color
         self.image = image
         self.dead = False
+        self.won = False
 
     def update_position(self, bodies):
         #Euler Numerical Integration.. Not stable long term but should be fine for our game? 
@@ -89,6 +91,13 @@ class Moving_body:
                     fy += f * dy / r
         
                 else:
+                    if hasattr(other, 'is_goal') and other.is_goal:
+                        if not self.won and not self.dead:
+                            self.won = True
+                            self.vx = 0
+                            self.vy = 0
+                        return
+
                     if not self.dead:
                         screen_x = int(self.x * constants.scale)
                         screen_y = int(self.y * constants.scale)
