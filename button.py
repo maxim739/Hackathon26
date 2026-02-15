@@ -11,6 +11,7 @@ class Button:
         self.inactive_color = inactive_color
         self.active_color = active_color
         self.action = action
+        self.font = pygame.font.Font('PixelPurl.ttf', 30)
 
 
     def draw(self, screen):
@@ -24,3 +25,8 @@ class Button:
                 self.action()
         else:
             pygame.draw.rect(screen, self.inactive_color, (self.x, self.y, self.width, self.height))    
+
+        #button text
+        text_surface = self.font.render(self.text, True, (255, 255, 255))
+        text_rect = text_surface.get_rect(center=(self.x + self.width // 2, self.y + self.height // 2))
+        screen.blit(text_surface, text_rect)
