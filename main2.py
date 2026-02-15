@@ -24,6 +24,54 @@ screen = pygame.display.set_mode(screen_res)
 
 import planets
 
+initial_rocket_index = None
+initial_rocket_state = None
+
+for i, body in enumerate(planets.game_bodies):
+    if isinstance(body, Moving_body):
+        initial_rocket_index = i
+        initial_rocket_state = {
+            'x': body.x,
+            'y': body.y,
+            'screen_x': body.screen_x,
+            'screen_y': body.screen_y,
+            'vx': body.vx,
+            'vy': body.vy,
+            'dead': False
+        }
+        break
+
+initial_bodies_count = len(planets.game_bodies)
+
+def restart_game():
+    """Reset the game to its initial state"""
+    global gameStopped, astromouse
+    
+    # Remove all asteroids (any bodies added after the initial count)
+    planets.game_bodies = planets.game_bodies[:initial_bodies_count]
+    
+    # Reset the rocket to its initial state
+    if initial_rocket_index is not None and initial_rocket_state is not None:
+        rocket = planets.game_bodies[initial_rocket_index]
+        rocket.x = initial_rocket_state['x']
+        rocket.y = initial_rocket_state['y']
+        rocket.screen_x = initial_rocket_state['screen_x']
+        rocket.screen_y = initial_rocket_state['screen_y']
+        rocket.vx = initial_rocket_state['vx']
+        rocket.vy = initial_rocket_state['vy']
+        rocket.dead = False
+    
+    # Clear any explosions
+    explosion_group.empty()
+    
+    # Reset game state flags
+    gameStopped = False
+    astromouse = False
+    
+    print("Game restarted!")
+
+
+
 while running:
     clock.tick(constants.fps)
     mouse = pygame.mouse.get_pos()
@@ -39,6 +87,10 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_r:
+                restart_game()
 
         #Place an asteroid where the mouse is
         if event.type == pygame.MOUSEBUTTONDOWN and astromouse == True:
