@@ -126,7 +126,6 @@ while running:
         drawIntroWindow(screen)
     elif current_state == constants.STATE_GAME:
         #render(screen, planets.game_bodies)
-        # jk
         place_ast = True
 
         if launched == False:
