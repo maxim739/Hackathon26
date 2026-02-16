@@ -42,8 +42,8 @@ def drawStartWindow(screen):
 
 def drawIntroWindow(screen):
     text1_surf = tutFont.render("Please save us! We don't know how to get home!", True, (255, 255, 255))
-    text2_surf = tutFont.render("You can place asteriods in the Universe to alter our path with gravity,", True, (255, 255, 255))
-    text3_surf = tutFont.render("And change our launch angle.", True, (255, 255, 255))
+    text2_surf = tutFont.render("You can place asteriods in the Universe to alter our path with gravity.", True, (255, 255, 255))
+    text3_surf = tutFont.render("     Press r to restart!", True, (255, 255, 255))
     text4_surf = tutFont.render("Make sure we don't crash!", True, (255, 255, 255))
 
     screen.blit(IMAGES["planet1"], (300, -25))
