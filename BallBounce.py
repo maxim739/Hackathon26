@@ -1,3 +1,6 @@
+"""
+I don't think we need to keep this file.. however I commited it out incase removing things causes a bug somehow
+
 import pygame
 import sys
 
@@ -50,3 +53,4 @@ while running:
 
 pygame.quit()
 sys.exit()
+"""

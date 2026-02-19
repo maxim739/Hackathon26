@@ -1,3 +1,6 @@
+"""
+I also don't think we need this file... it could be deleted to clean things up
+
 import pygame
 import math
 import constants
@@ -240,4 +243,4 @@ while running:
     pygame.display.flip()
     clock.tick(60)
 
-pygame.quit()
+pygame.quit()"""
