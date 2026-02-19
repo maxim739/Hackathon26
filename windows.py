@@ -30,6 +30,29 @@ def drawStartWindow(screen):
     screen.blit(IMAGES["goalAura"], (1000, 600))
     screen.blit(IMAGES["rotatedRocket"], (200, 600))
 
+    #big stars
+    screen.blit(IMAGES["bigstar"], (100,100))
+    screen.blit(IMAGES["bigstar"], (800,200))
+    screen.blit(IMAGES["bigstar"], (200,600))
+    screen.blit(IMAGES["bigstar"], (550,480))
+    screen.blit(IMAGES["bigstar"], (290,610))
+    screen.blit(IMAGES["bigstar"], (1220,200))
+    screen.blit(IMAGES["bigstar"], (1100,500))
+    screen.blit(IMAGES["bigstar"], (800,300))
+    screen.blit(IMAGES["bigstar"], (500,300))
+
+    #little stars
+    screen.blit(IMAGES["smallstar"], (600,400))
+    screen.blit(IMAGES["smallstar"], (700,100))
+    screen.blit(IMAGES["smallstar"], (880,220))
+    screen.blit(IMAGES["smallstar"], (1200,700))
+    screen.blit(IMAGES["smallstar"], (100,400))
+    screen.blit(IMAGES["smallstar"], (400,690))
+    screen.blit(IMAGES["smallstar"], (1200,248))
+    screen.blit(IMAGES["smallstar"], (800,700))
+    screen.blit(IMAGES["smallstar"], (700,300))
+
+
     text_surf = titleFont.render("ROCKETMAN!", True, (255, 255, 255))
     text1_surf = buttonFont.render("Made by Maxim DeJong, William Gray, and Saabir Yousuf", True, (255, 255, 255))
     text2_surf = buttonFont.render("McGill Physics Hackathon 2026", True, (255, 255, 255))

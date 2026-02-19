@@ -22,6 +22,7 @@ rocket_img = pygame.transform.scale(rocket_img, (20, 20))
 astro_img = pygame.image.load("sprites/asteroid.png").convert_alpha()
 astro_img = pygame.transform.scale(astro_img, (45, 45))
 
+
 game_bodies = [
     Static_body(300, 100, 5e28, 35, (255,255,0), planet1_img),
     Static_body(100, 300, 2e30, 35, (255,0,0), planet2_img),

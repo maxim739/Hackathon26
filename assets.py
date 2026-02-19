@@ -10,11 +10,21 @@ def load_assets():
                     "planet5", "planet6", "planet7",
                     "planet8", "goalAura",]
     
+    star_files = ["bigstar","midstar", "smallstar",
+                  ]
+    
     other_files = ["rocket"]
 
     raw = pygame.image.load("sprites/rocket.png").convert_alpha()
     IMAGES["rocket"] = pygame.transform.scale(raw, (120, 120))
     
+    for name in star_files:
+        path = f"sprites/{name}.png"
+        # 1. Load the raw image
+        raw_img = pygame.image.load(path).convert_alpha()
+        # 2. Scale different than planets and store in our dictionary
+        IMAGES[name] = pygame.transform.scale(raw_img, (30, 30))
+
     for name in planet_files:
         path = f"sprites/{name}.png"
         # 1. Load the raw image
