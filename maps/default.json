@@ -1,0 +1,84 @@
+{
+  "name": "Default",
+  "bodies": [
+    {
+      "x": 300,
+      "y": 100,
+      "mass": 5e+28,
+      "radius_m": 3390000.0,
+      "sprite": "planet1",
+      "is_goal": false
+    },
+    {
+      "x": 100,
+      "y": 300,
+      "mass": 2e+30,
+      "radius_m": 71500000.0,
+      "sprite": "planet2",
+      "is_goal": false
+    },
+    {
+      "x": 400,
+      "y": 200,
+      "mass": 1e+30,
+      "radius_m": 6370000.0,
+      "sprite": "planet3",
+      "is_goal": false
+    },
+    {
+      "x": 480,
+      "y": 600,
+      "mass": 8e+28,
+      "radius_m": 2440000.0,
+      "sprite": "planet4",
+      "is_goal": false
+    },
+    {
+      "x": 180,
+      "y": 550,
+      "mass": 2e+31,
+      "radius_m": 60300000.0,
+      "sprite": "planet5",
+      "is_goal": false
+    },
+    {
+      "x": 1100,
+      "y": 650,
+      "mass": 8e+28,
+      "radius_m": 1740000.0,
+      "sprite": "goalAura",
+      "is_goal": true
+    },
+    {
+      "x": 800,
+      "y": 200,
+      "mass": 1e+30,
+      "radius_m": 6370000.0,
+      "sprite": "planet6",
+      "is_goal": false
+    },
+    {
+      "x": 800,
+      "y": 500,
+      "mass": 1e+30,
+      "radius_m": 25400000.0,
+      "sprite": "planet7",
+      "is_goal": false
+    },
+    {
+      "x": 1000,
+      "y": 300,
+      "mass": 1e+30,
+      "radius_m": 24600000.0,
+      "sprite": "planet8",
+      "is_goal": false
+    }
+  ],
+  "rocket": {
+    "x": 100,
+    "y": 100,
+    "vx": 0.0,
+    "vy": 0.0,
+    "mass": 8.681e+25
+  }
+}
