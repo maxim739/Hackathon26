@@ -1,21 +1,27 @@
 import pygame
 import math
-import constants
+from logic import constants
 
 game_start = False
 
 class Static_body:
-    def __init__(self, x, y, mass, radius, color, image=None, is_goal = False):
+    def __init__(self, x, y, mass, radius, color, image=None, is_goal=False, physical_radius=None):
+        """
+        x, y         — screen position in pixels
+        mass         — kg
+        radius       — collision radius in screen pixels (used if physical_radius is None)
+        physical_radius — real radius in metres; overrides radius when provided
+        """
         self.screen_x = x
         self.screen_y = y
         self.x = x / constants.scale
         self.y = y / constants.scale
         self.mass = mass
-        self.radius = radius
+        self.radius = int(physical_radius * constants.scale) if physical_radius is not None else radius
         self.color = color
         self.image = image
         self.is_goal = is_goal
-    
+
     def draw(self, screen, width, height):
         #pygame.draw.circle(screen, self.color, (self.screen_x, self.screen_y), self.radius)
 
@@ -28,7 +34,7 @@ class Explosion(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.images = []
         for num in range(1,4):
-            img = pygame.image.load(f"sprites/explosion{num}.png")
+            img = pygame.image.load(f"assets/sprites/explosions/explosion{num}.png")
             img = pygame.transform.scale(img, (100,100))
             self.images.append(img)
         self.index = 0
@@ -48,7 +54,7 @@ class Explosion(pygame.sprite.Sprite):
 
 		#if the animation is complete, reset animation index
         if self.index >= len(self.images) - 1 and self.counter >= explosion_speed:
-            self.kill() 
+            self.kill()
 
 explosion_group = pygame.sprite.Group()
 
@@ -68,7 +74,7 @@ class Moving_body:
         self.won = False
 
     def update_position(self, bodies):
-        #Euler Numerical Integration.. Not stable long term but should be fine for our game? 
+        #Euler Numerical Integration.. Not stable long term but should be fine for our game?
         #Might have to change it in the fututer
 
         #intialize force in x and y
@@ -82,14 +88,14 @@ class Moving_body:
                 dy = other.y - self.y
                 r = math.sqrt(dx**2 + dy**2)
 
-                #this is to get rid of dividing by zero 
+                #this is to get rid of dividing by zero
                 if r > (other.radius + self.radius)/constants.scale:
                     #newtons formula f = G Mm / r^2
                     f = constants.G * self.mass * other.mass / (r**2)
                     #break force up into x and y components
                     fx += f * dx / r
                     fy += f * dy / r
-        
+
                 else:
                     if hasattr(other, 'is_goal') and other.is_goal:
                         if not self.won and not self.dead:
@@ -114,19 +120,19 @@ class Moving_body:
 
         #now that we have the force we can compute the acceleration velocity and position
         ax = fx / self.mass
-        ay = fy / self.mass 
+        ay = fy / self.mass
         self.vx += ax * constants.dt
         self.vy += ay * constants.dt
         self.x += self.vx * constants.dt
         self.y += self.vy * constants.dt
-        
-    
+
+
     def reset(self):
         self.x = 2.867e12
         self.y = 0
         self.vx = 0
         self.vy = 6810
-    
+
     def stop(self):
         self.vx = 0
         self.vy = 0
@@ -139,7 +145,7 @@ class Moving_body:
         if self.image:
             #only roate when body is moving
             if self.vx != 0 or self.vy != 0:
-                # atan2 returns angle between two axis in radians 
+                # atan2 returns angle between two axis in radians
                 # use math.degrees to change into degrees
                 angle = math.degrees(math.atan2(self.vy, -self.vx))
 

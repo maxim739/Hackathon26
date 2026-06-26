@@ -1,13 +1,13 @@
 import pygame
-import constants
-from assets import IMAGES
+from logic import constants
+from display.assets import IMAGES
 
 pygame.init()
 pygame.font.init()
 
-buttonFont = pygame.font.Font('PixelPurl.ttf', 30)
-titleFont = pygame.font.Font('PixelPurl.ttf', 120)
-tutFont = pygame.font.Font('PixelPurl.ttf', 40)
+buttonFont = pygame.font.Font('assets/fonts/PixelPurl.ttf', 30)
+titleFont = pygame.font.Font('assets/fonts/PixelPurl.ttf', 120)
+tutFont = pygame.font.Font('assets/fonts/PixelPurl.ttf', 40)
 
 start_button = pygame.Rect(constants.width/2-100, constants.height*4/5, 200, 50)
 okay_button = pygame.Rect(constants.width/2-100, constants.height*4/5, 200, 50)
@@ -95,16 +95,15 @@ def drawWinWindow(screen):
     overlay.set_alpha(200)
     overlay.fill((0, 50, 0))  # Dark green tint
     screen.blit(overlay, (0, 0))
-        
+
         # Display WIN text
     win_font = titleFont
     win_text = win_font.render("YOU WIN!", True, (0, 255, 0))
     win_rect = win_text.get_rect(center=(constants.width // 2, constants.height // 2 - 50))
     screen.blit(win_text, win_rect)
-        
+
         # Display restart instruction
     restart_font = tutFont
     restart_text = restart_font.render("Press R to Restart", True, (255, 255, 255))
     restart_rect = restart_text.get_rect(center=(constants.width // 2, constants.height // 2 + 50))
     screen.blit(restart_text, restart_rect)
-

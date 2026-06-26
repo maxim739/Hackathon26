@@ -1,7 +1,7 @@
 import pygame
-import constants				# The constants for the game
+from logic import constants				# The constants for the game
 import math
-from bodies import *
+from logic.bodies import *
 
 def draw_arrow(
     surface: pygame.Surface,
@@ -11,8 +11,8 @@ def draw_arrow(
     size: int = 20,
 ):
     # Width of the shaft relative to the head size
-    sw = size // 3  
-    
+    sw = size // 3
+
     # Define the 7 points of the arrow relative to (0,0)
     # Default orientation: pointing UP
     vertices = [
@@ -95,7 +95,7 @@ def render(screen, bodies):
 
 def renderSurface(target_surface, bodies_list):
 	target_surface.fill((0, 0, 0, 0))
-	
+
 	cols = (constants.width // 20) + 1
 	rows = (constants.height // 20) + 1
 

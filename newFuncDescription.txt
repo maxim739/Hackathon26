@@ -1,0 +1,12 @@
+I want to create another mapBuilder.py file in this directory that the user can use to build a map for the game. There are two main tasks for this that should be delegated as needed
+
+1. Formulate and describe a way that a .json file can describe a map for the game. This task will need to be completed first
+	1.1) maps should describe the size and place of planets in the game's display space
+	1.2) create a directory structure that supports maps. Create a map directory that the game will look into for maps, which will also be used by the map creator as where it should store maps
+
+2 and 3 can be done in parallel
+
+2. Make a way for the game to import .json files for maps. On the introduction page, prompt the user for which map they would like to play on. 
+3. Create the map builder program as a separate .py file from main.py
+	3.1) there should be a main building environment, and a bar on the right where users can drag and drop a variety of different planets that are taken from the sprite collection. when the sprite is placed onto the map, the position and planet is remembered, and the arrows/vectors are redrawn so that the user can see what the map looks like
+	3.2) create functionality to place the goal as well

@@ -11,7 +11,7 @@ class Button:
         self.inactive_color = inactive_color
         self.active_color = active_color
         self.action = action
-        self.font = pygame.font.Font('PixelPurl.ttf', 30)
+        self.font = pygame.font.Font('assets/fonts/PixelPurl.ttf', 30)
 
 
     def draw(self, screen, selected=False):
@@ -26,7 +26,7 @@ class Button:
             if click[0] == 1 and self.action is not None:
                 self.action()
         else:
-            pygame.draw.rect(screen, self.inactive_color, (self.x, self.y, self.width, self.height))    
+            pygame.draw.rect(screen, self.inactive_color, (self.x, self.y, self.width, self.height))
 
         #button text
         text_surface = self.font.render(self.text, True, (255, 255, 255))
