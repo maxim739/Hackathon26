@@ -14,9 +14,8 @@ IMAGES = {}
 
 def load_assets():
     """Call this function once AFTER pygame.display.set_mode()"""
-    planet_files = ["planet1", "planet2", "planet3",
-                    "planet5", "planet6", "planet7",
-                    "planet8",]
+    planet_files = ["planet1", "planet2", "planet3", "planet4",
+                    "planet5", "planet6", "planet7", "planet8"]
 
     star_files = ["bigstar", "midstar", "smallstar"]
 
