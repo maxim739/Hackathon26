@@ -30,6 +30,7 @@ gameStopped = False
 astromouse = True
 can_place = False
 speed_doubled = False
+just_reset = False
 
 astroMass = 5.972e30
 mass_1 = 5.972e30
@@ -68,20 +69,6 @@ rocket_img = pygame.transform.scale(rocket_img, (20, 20))
 astro_img = pygame.image.load("assets/sprites/asteroid.png").convert_alpha()
 astro_img = pygame.transform.scale(astro_img, (45, 45))
 
-# Physical radii in metres (real solar-system scale, clamped to min 65px on screen)
-_R_JUPITER  = 7.15e7   # ~71,500 km
-_R_SATURN   = 6.03e7   # ~60,300 km
-_R_URANUS   = 2.54e7   # ~25,400 km
-_R_NEPTUNE  = 2.46e7   # ~24,600 km
-_R_EARTH    = 6.37e6   # ~6,370 km
-_R_MARS     = 3.39e6   # ~3,390 km
-_R_MERCURY  = 2.44e6   # ~2,440 km
-_R_MOON     = 1.74e6   # ~1,740 km
-
-def _pr(metres):
-    """Convert physical radius to screen pixels, minimum 65px so planets stay hittable."""
-    return max(65, int(metres * constants.scale))
-
 def build_bodies_from_map(map_data):
     result = []
     for b in map_data['bodies']:
@@ -90,18 +77,16 @@ def build_bodies_from_map(map_data):
             img = _load_planet('assets/sprites/goalAura.png')
         else:
             img = _load_planet(f'assets/sprites/planets/{sprite_key}.png')
-        r_m = b.get('radius_m', 6.37e6)
-        radius_px = max(65, int(r_m * constants.scale))
+        radius_px = constants.SPRITE_RADII.get(sprite_key, 65)
         result.append(Static_body(
             b['x'], b['y'], b['mass'], radius_px,
             (0, 0, 0), img,
             is_goal=b.get('is_goal', False),
-            physical_radius=r_m
         ))
     r = map_data['rocket']
     rocket_img_local = pygame.image.load('assets/sprites/rocket.png').convert_alpha()
     rocket_img_local = pygame.transform.scale(rocket_img_local, (20, 20))
-    result.append(Moving_body(r['x'], r['y'], r['vx'], r['vy'], r['mass'], 10, (100, 200, 255), rocket_img_local))
+    result.append(Moving_body(r['x'], r['y'], r['vx'], r['vy'], r['mass'], constants.SPRITE_RADII['rocket'], (100, 200, 255), rocket_img_local))
     return result
 
 game_bodies = build_bodies_from_map(selected_map_data) if selected_map_data else []
@@ -194,12 +179,14 @@ vector_field.renderSurface(field_cache, game_bodies)
 while running:
     clock.tick(constants.fps)
 
+    just_reset = False
     events = pygame.event.get()
+    event = pygame.event.Event(pygame.NOEVENT)
     mouse_pos = pygame.mouse.get_pos()
 
     astro_scale = pygame.transform.scale(astro_img, (45*(astroMass/mass_1), 45*(astroMass/mass_1)))
 
-    asteriod = Static_body(mouse_pos[0], mouse_pos[1], astroMass, 12*(astroMass/mass_1), (200, 150, 255), astro_scale)
+    asteriod = Static_body(mouse_pos[0], mouse_pos[1], astroMass, constants.SPRITE_RADII['asteroid'], (200, 150, 255), astro_scale)
 
     for event in events:
         # Check events list for any state specific logic
@@ -315,10 +302,11 @@ while running:
             reset_but.draw(screen)
             if event.type == pygame.MOUSEBUTTONDOWN and reset_but.x < mouse_pos[0] < reset_but.x + reset_but.width and reset_but.y < mouse_pos[1] < reset_but.y + reset_but.height:
                 restart_game()
+                just_reset = True
         elif not bodies.game_start:
             start_but = Button("BLAST OFF", 550, 700, 200, 50, constants.startButton, (129, 0, 209))
             start_but.draw(screen)
-            if event.type == pygame.MOUSEBUTTONDOWN and start_but.x < mouse_pos[0] < start_but.x + start_but.width and start_but.y < mouse_pos[1] < start_but.y + start_but.height:
+            if not just_reset and event.type == pygame.MOUSEBUTTONDOWN and start_but.x < mouse_pos[0] < start_but.x + start_but.width and start_but.y < mouse_pos[1] < start_but.y + start_but.height:
                 start_game()
         else:
             boost_color = (60, 60, 60) if speed_doubled else (200, 100, 0)

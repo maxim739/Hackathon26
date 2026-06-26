@@ -17,7 +17,7 @@ class Static_body:
         self.x = x / constants.scale
         self.y = y / constants.scale
         self.mass = mass
-        self.radius = int(physical_radius * constants.scale) if physical_radius is not None else radius
+        self.radius = max(65, int(physical_radius * constants.scale)) if physical_radius is not None else radius
         self.color = color
         self.image = image
         self.is_goal = is_goal

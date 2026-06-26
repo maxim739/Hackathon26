@@ -24,6 +24,22 @@ MIN_FORCE = 1e20
 
 MAX_ASTEROIDS = 10
 
+# Visual radii in pixels after scaling to display size (computed from non-transparent pixels)
+# Planets scale to 140x140, asteroid to 45x45, rocket to 20x20
+SPRITE_RADII = {
+    'planet1':  43,
+    'planet2':  32,
+    'planet3':  57,
+    'planet4':  56,
+    'planet5':  44,
+    'planet6':  43,
+    'planet7':  64,
+    'planet8':  47,
+    'goalAura': 55,
+    'asteroid': 11,
+    'rocket':   11,
+}
+
 # Screen values
 width = 1300
 height = 800
