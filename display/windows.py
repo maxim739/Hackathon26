@@ -1,13 +1,22 @@
 import pygame
+import sys
+import os
 from logic import constants
 from display.assets import IMAGES
+
+def _asset(path):
+    if hasattr(sys, '_MEIPASS'):
+        base = sys._MEIPASS
+    else:
+        base = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base, path)
 
 pygame.init()
 pygame.font.init()
 
-buttonFont = pygame.font.Font('assets/fonts/PixelPurl.ttf', 30)
-titleFont = pygame.font.Font('assets/fonts/PixelPurl.ttf', 120)
-tutFont = pygame.font.Font('assets/fonts/PixelPurl.ttf', 40)
+buttonFont = pygame.font.Font(_asset('assets/fonts/PixelPurl.ttf'), 30)
+titleFont = pygame.font.Font(_asset('assets/fonts/PixelPurl.ttf'), 120)
+tutFont = pygame.font.Font(_asset('assets/fonts/PixelPurl.ttf'), 40)
 
 start_button = pygame.Rect(constants.width/2-100, constants.height*4/5, 200, 50)
 okay_button = pygame.Rect(constants.width/2-100, constants.height*4/5, 200, 50)

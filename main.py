@@ -6,6 +6,12 @@ main is the entry point for the game that serves as the
 import pygame
 import sys
 import math
+import os
+
+def _asset(path):
+    """Resolve asset path — works both in dev and inside a PyInstaller bundle."""
+    base = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base, path)
 
 from logic import bodies
 from logic import constants
@@ -50,7 +56,7 @@ selected_map_index = 0
 selected_map_data = load_map(available_maps[selected_map_index]) if available_maps else None
 
 def _load_planet(path):
-    img = pygame.image.load(path).convert_alpha()
+    img = pygame.image.load(_asset(path)).convert_alpha()
     return pygame.transform.scale(img, (140, 140))
 
 planet1_img = _load_planet("assets/sprites/planets/planet1.png")
@@ -63,10 +69,10 @@ planet7_img = _load_planet("assets/sprites/planets/planet7.png")
 planet8_img = _load_planet("assets/sprites/planets/planet8.png")
 goal_img    = _load_planet("assets/sprites/goalAura.png")
 
-rocket_img = pygame.image.load("assets/sprites/rocket.png").convert_alpha()
+rocket_img = pygame.image.load(_asset("assets/sprites/rocket.png")).convert_alpha()
 rocket_img = pygame.transform.scale(rocket_img, (20, 20))
 
-astro_img = pygame.image.load("assets/sprites/asteroid.png").convert_alpha()
+astro_img = pygame.image.load(_asset("assets/sprites/asteroid.png")).convert_alpha()
 astro_img = pygame.transform.scale(astro_img, (45, 45))
 
 def build_bodies_from_map(map_data):
@@ -84,7 +90,7 @@ def build_bodies_from_map(map_data):
             is_goal=b.get('is_goal', False),
         ))
     r = map_data['rocket']
-    rocket_img_local = pygame.image.load('assets/sprites/rocket.png').convert_alpha()
+    rocket_img_local = pygame.image.load(_asset('assets/sprites/rocket.png')).convert_alpha()
     rocket_img_local = pygame.transform.scale(rocket_img_local, (20, 20))
     result.append(Moving_body(r['x'], r['y'], r['vx'], r['vy'], r['mass'], constants.SPRITE_RADII['rocket'], (100, 200, 255), rocket_img_local))
     return result
@@ -279,7 +285,7 @@ while running:
     elif current_state == constants.STATE_TUT:
         drawIntroWindow(screen)
         if available_maps:
-            map_font = pygame.font.Font('assets/fonts/PixelPurl.ttf', 24)
+            map_font = pygame.font.Font(_asset('assets/fonts/PixelPurl.ttf'), 24)
             map_name = available_maps[selected_map_index]
             map_text = map_font.render(f'< Map: {map_name} >', True, (200, 200, 255))
             screen.blit(map_text, map_text.get_rect(center=(constants.width // 2, constants.height - 80)))

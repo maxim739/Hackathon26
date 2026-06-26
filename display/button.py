@@ -1,5 +1,14 @@
 
 import pygame
+import sys
+import os
+
+def _asset(path):
+    if hasattr(sys, '_MEIPASS'):
+        base = sys._MEIPASS
+    else:
+        base = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base, path)
 
 class Button:
     def __init__(self, text, x, y, width, height, inactive_color, active_color, action=None):
@@ -11,7 +20,7 @@ class Button:
         self.inactive_color = inactive_color
         self.active_color = active_color
         self.action = action
-        self.font = pygame.font.Font('assets/fonts/PixelPurl.ttf', 30)
+        self.font = pygame.font.Font(_asset('assets/fonts/PixelPurl.ttf'), 30)
 
 
     def draw(self, screen, selected=False):
