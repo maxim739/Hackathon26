@@ -1,6 +1,15 @@
 import pygame
 import math
+import sys
+import os
 from logic import constants
+
+def _asset(path):
+    if hasattr(sys, '_MEIPASS'):
+        base = sys._MEIPASS
+    else:
+        base = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base, path)
 
 game_start = False
 
@@ -34,7 +43,7 @@ class Explosion(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.images = []
         for num in range(1,4):
-            img = pygame.image.load(f"assets/sprites/explosions/explosion{num}.png")
+            img = pygame.image.load(_asset(f"assets/sprites/explosions/explosion{num}.png"))
             img = pygame.transform.scale(img, (100,100))
             self.images.append(img)
         self.index = 0
