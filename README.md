@@ -21,6 +21,28 @@ Maxim DeJong, William Gray, Saabir Yousuf
 
 ---
 
+## Building a standalone executable
+
+Run `build.py` on the target platform to produce a single executable with no Python dependency:
+
+```
+# Windows
+python312 build.py        # produces dist/RocketMan.exe
+
+# macOS / Linux
+pip install pygame pyinstaller
+python3 build.py          # produces dist/RocketMan
+```
+
+PyInstaller must be installed first:
+```
+pip install pyinstaller --index-url https://pypi.org/simple/
+```
+
+**Note:** PyInstaller builds for the OS it runs on — you cannot cross-compile. Each platform requires its own build run. The `build/` and `dist/` directories are generated artefacts and are not committed to the repo.
+
+---
+
 ## Running the game
 
 ```
